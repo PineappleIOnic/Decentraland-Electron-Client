@@ -74,8 +74,6 @@ const createWindow = () => {
     let currentURL = mainWindow.webContents.getURL();
     currentURL = currentURL.replace('https://explorer.decentraland.org/?position=','');
     currentCoords = currentURL.replace('%2C',',')
-    console.log(currentCoords)
-
 
     if (currentCoords.includes('https://explorer.decentraland.org') == true) {
       client.updatePresence({
