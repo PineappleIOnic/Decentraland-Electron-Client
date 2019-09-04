@@ -1,0 +1,23 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+html,body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+.window-controls-container {
+  position: absolute;
+  right: 0px;
+}
+
+.container-after-titlebar {
+  overflow: hidden !important;
+}
+
+.titlebar .window-title {
+  margin-left: 10px !important;
+  margin-right: auto !important;
+}
