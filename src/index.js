@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron');
+const fs = require('fs');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -28,27 +29,33 @@ const createWindow = () => {
     }
   });
 
+    // custom titlebar script
+    mainWindow.webContents.executeJavaScript(`
+    const titlebar = require("custom-electron-titlebar");
   
-  // Discord RPC
-  const client = require('discord-rich-presence')('618606658331082783');
+    new titlebar.Titlebar({
+        backgroundColor: titlebar.Color.fromHex('#2b2e3b'),
+        shadow: true,
+        icon: false,
+        menu: null
+    });
+    `)
 
-  timethen = Date.now()
+  //Inject our css to fix text and other things
+  mainWindow.webContents.on('did-finish-load', function() {
 
-  mainWindow.webContents.executeJavaScript(`
-  console.log("This loads no problem!");
-  `)
-
-  client.updatePresence({
-    state: 'Currently Surfing the decentralised network',
-    details: 'In Decentraland',
-    startTimestamp: timethen,
-    largeImageKey: 'logo',
-    instance: true,
-  });
+    fs.readFile(__dirname+ '/index.css', "utf-8", function(error, data) {
+      if(!error){
+        var formatedData = data.replace(/\s{2,10}/g, ' ').trim()
+        mainWindow.webContents.insertCSS(formatedData)
+      }
+    })
+  })
 
   // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/index.html`);
+  //mainWindow.loadURL(`file://${__dirname}/index.html`);
 
+  mainWindow.loadURL(`https://explorer.decentraland.org`);
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
     // Dereference the window object, usually you would store windows
@@ -56,6 +63,39 @@ const createWindow = () => {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
+
+  // Discord RPC
+  const client = require('discord-rich-presence')('618606658331082783');
+
+  timethen = Date.now()
+
+  setInterval(function(){
+    let currentURL = mainWindow.webContents.getURL();
+    currentURL = currentURL.replace('https://explorer.decentraland.org/?position=','');
+    currentCoords = currentURL.replace('%2C',',')
+    console.log(currentCoords)
+
+
+    if (currentCoords.includes('https://explorer.decentraland.org') == true) {
+      client.updatePresence({
+        state: 'Currently Loading into Decentraland...',
+        details: 'In Decentraland',
+        startTimestamp: timethen,
+        largeImageKey: 'logo',
+        instance: true,
+      });
+    } else {
+      client.updatePresence({
+        state: 'Currently @ ' + currentCoords,
+        details: 'In Decentraland',
+        startTimestamp: timethen,
+        largeImageKey: 'logo',
+        instance: true,
+      });
+    }
+  }, 600);
+
 };
 
 // This method will be called when Electron has finished
