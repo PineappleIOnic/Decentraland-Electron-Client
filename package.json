@@ -13,18 +13,20 @@
   },
   "keywords": [],
   "author": {
-    "name": "Bradley Schofield",
+    "name": "IOnicisere",
     "email": "26739219+PineappleIOnic@users.noreply.github.com"
   },
   "license": "MIT",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "src/images/color.ico"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "Decentraland-Electron-Client"
+            "name": "Decentraland"
           }
         },
         {

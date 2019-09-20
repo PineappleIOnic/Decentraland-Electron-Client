@@ -29,6 +29,8 @@ const createWindow = () => {
     }
   });
 
+  mainWindow.webContents.on('did-finish-load', function() {
+    
     // custom titlebar script
     mainWindow.webContents.executeJavaScript(`
     const titlebar = require("custom-electron-titlebar");
@@ -40,10 +42,8 @@ const createWindow = () => {
         menu: null
     });
     `)
-
-  //Inject our css to fix text and other things
-  mainWindow.webContents.on('did-finish-load', function() {
-
+  
+    //Inject our css to fix text and sizing
     fs.readFile(__dirname+ '/index.css', "utf-8", function(error, data) {
       if(!error){
         var formatedData = data.replace(/\s{2,10}/g, ' ').trim()
@@ -100,6 +100,8 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
+
+app.setAsDefaultProtocolClient("decentraclient");
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
