@@ -13,9 +13,9 @@ Feel free to fork and make changes and build on this.
 It's MIT Licence anyway.
 
  ## 	Built on...
- Webpack
- Electron-Forge
- discord-rich-presence
+ + Webpack
+ + Electron-Forge
+ + discord-rich-presence
  
 ## Notes
 
