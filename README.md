@@ -16,9 +16,3 @@ It's MIT Licence anyway.
  + Webpack
  + Electron-Forge
  + discord-rich-presence
- 
-## Notes
-
-Just a heads up, some of the code is isn't very good, and I implemented some hacky ideas to get around some issues I had.
-
-
